@@ -14,21 +14,21 @@ flowchart TD
 
     C -->|new| N1[計算 delivery_date<br/>if now<03:00 => 今日<br/>else => 明天]
     N1 --> N2[建立 DraftOrders 草稿<br/>狀態=pending]
-    N2 --> N3[推送店主: 草稿內容<br/> `確認/修改/拒絕`]
+    N2 --> N3[推送店主: 草稿內容<br/> `OK/Edit/No`]
 
     C -->|update| U1[讀取 DraftOrders/Orders<br/>by 訂單號/客戶]
     U1 --> U2[更新草稿或已確認訂單<br/>狀態=edited]
 
     C -->|cancel| K{now < 03:00 ?}
-    K -->|是| K1[更新 Orders 狀態=cancelled<br/>通知雙方]
-    K -->|否| K2[拒絕取消 + 通知雙方]
+    K -->|Y| K1[更新 Orders 狀態=cancelled<br/>通知雙方]
+    K -->|N| K2[拒絕取消 + 通知雙方]
 
     N3 --> D{店主回覆}
-    D -->|確認| O1[將草稿寫入 Orders<br/>狀態=confirmed]
+    D -->|OK| O1[將草稿寫入 Orders<br/>狀態=confirmed]
     O1 --> O2[DraftOrders 狀態=confirmed]
     O1 --> O3[通知客戶: 已確認]
-    D -->|修改| N2
-    D -->|拒絕| R1[DraftOrders 狀態=rejected<br/>通知客戶]
+    D -->|Edit| N2
+    D -->|No| R1[DraftOrders 狀態=rejected<br/>通知客戶]
 
     CRON[Cron 03:00] --> R[讀 Orders: delivery_date=今日<br/>狀態=confirmed]
     R --> SUM[按產品彙總 qty_required]
