@@ -9,7 +9,7 @@ flowchart TD
 
     L --> C[AI/規則判斷意圖<br/>enquiry / new / update / cancel]
 
-    C -->|enquiry| ENQ[通知店主手動跟進<br/> `Draft 不建立`]
+    C -->|enquiry| ENQ[通知店主手動跟進<br/> (Draft 不建立)]
     ENQ --> END1[End]
 
     C -->|new| N1[計算 delivery_date<br/>if now<03:00 => 今日<br/>else => 明天]
