@@ -2,6 +2,7 @@
 ---
 ## Flow diagram
 
+```mermaid
 flowchart TD
     A[WhatsApp 新訊息] --> B[自動回覆: 請稍等]
     B --> L[寫入 Logs: 原始對話+時間戳]
@@ -33,10 +34,12 @@ flowchart TD
     R --> SUM[按產品彙總 qty_required]
     SUM --> INV[讀 Inventory qty_onhand]
     INV --> MSG[推送店主產品列表<br/>今日需出貨 vs 現存]
+```
 
 ---
 ## Sequence diagram
 
+```mermaid
 sequenceDiagram
     participant C as 客戶
     participant W as WhatsApp Bot<br/>(n8n + AI)
@@ -88,3 +91,4 @@ sequenceDiagram
     W->>W: 彙總 qty_required
     W->>I: 讀現存 qty_onhand
     W->>S: 推送產品列表(今日需出貨 vs 現存)
+```
